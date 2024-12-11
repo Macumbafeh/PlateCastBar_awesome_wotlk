@@ -7,3 +7,6 @@ You can change the position of the nameplate castbar on this part of the code : 
 Just change the last 0 to the position you want
 
 ![image](https://github.com/user-attachments/assets/26adf70c-e1bf-41bb-82c2-82a993cdebb1)
+
+Modified version of PlateCastBar made by Schaka here :
+https://github.com/Schaka/WotLK-AddOns_TBC
