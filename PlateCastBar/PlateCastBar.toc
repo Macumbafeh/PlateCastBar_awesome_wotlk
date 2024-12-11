@@ -1,0 +1,7 @@
+## Interface: 30300
+## Title: PlateCastBar
+## Author: raisnilt, Schaka, modified by Macumba
+## Notes: Shows enemy CastBars under nameplates and also non targeted one with awesome_wotlk patch.
+## SavedVariables: PlateCastBar_SavedVariables
+
+PlateCastBar.lua
