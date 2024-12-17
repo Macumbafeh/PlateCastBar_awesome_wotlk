@@ -209,7 +209,7 @@ local function UpdateCastBar(unit, isChannel)
         local _, _, _, xOfs, yOfs = CastBar.Texture:GetPoint()
         CastBar.Texture:ClearAllPoints()
         if isChannel then
-            CastBar.Texture:SetPoint("CENTER", CastBar, "CENTER", Width/2 - (Width * castTime/maxCastTime)* (1), yOfs)
+            CastBar.Texture:SetPoint("CENTER", CastBar, "CENTER", -Width/2 + Width*(castTime/maxCastTime)/2, yOfs)
         else
             CastBar.Texture:SetPoint("CENTER", CastBar, "CENTER", -Width/2 + Width*(castTime/maxCastTime)/2, yOfs)
         end
