@@ -7,13 +7,13 @@ Works with every nameplate addon
 You can change the position of the nameplate castbar on this part of the code : `CastBar:SetPoint("TOP", namePlate, "BOTTOM", 0, 0)`
 Just change the last 0 to the position you want
 
-![image](https://github.com/user-attachments/assets/26adf70c-e1bf-41bb-82c2-82a993cdebb1)
+![image](https://github.com/user-attachments/assets/29146d21-5c58-4989-830f-1686d4e4a09b)
 
 New update : Rewrite of the code to make it easier to change the castbar with everything else
 
 Now you can set width and height of everything at this line
 
-![image](https://github.com/user-attachments/assets/02514c81-8ade-48e6-983d-3c700e8ac95d)
+![image](https://github.com/user-attachments/assets/397a7a28-6808-4b22-9485-f9293c82c90d)
 
 I added many textures file also from Sharedmedia addon, if you want to change the texture skin you can change the name here (same thing for the font)
 
