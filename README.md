@@ -9,6 +9,16 @@ Just change the last 0 to the position you want
 
 ![image](https://github.com/user-attachments/assets/26adf70c-e1bf-41bb-82c2-82a993cdebb1)
 
+New update : Rewrite of the code to make it easier to change the castbar with everything else
+
+Now you can set width and height of everything at this line
+
+![image](https://github.com/user-attachments/assets/02514c81-8ade-48e6-983d-3c700e8ac95d)
+
+I added many textures file also from Sharedmedia addon, if you want to change the texture skin you can change the name here (same thing for the font)
+
+![image](https://github.com/user-attachments/assets/abe258a4-da5b-41b9-96e1-45cc0b93620d)
+
 Modified version of PlateCastBar made by Schaka here :
 https://github.com/Schaka/WotLK-AddOns_TBC
 
