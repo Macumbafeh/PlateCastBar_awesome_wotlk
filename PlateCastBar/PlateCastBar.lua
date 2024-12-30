@@ -27,6 +27,53 @@ local Textures = {
     CastBar= "Interface\\AddOns\\".. AddOn .."\\Textures\\media\\LiteStep.tga",
 }
 
+if not _G[AddOn .. "_SavedVariables"] then
+    _G[AddOn .. "_SavedVariables"] = {}
+end
+if not _G[AddOn .. "_SavedVariables"]["CastBar"] then
+    _G[AddOn .. "_SavedVariables"]["CastBar"] = {}
+end
+
+-- Now set defaults if they’re missing:
+if not _G[AddOn .. "_SavedVariables"]["CastBar"].Width then
+    _G[AddOn .. "_SavedVariables"]["CastBar"].Width = 105
+end
+if not _G[AddOn .. "_SavedVariables"]["CastBar"].Height then
+    _G[AddOn .. "_SavedVariables"]["CastBar"].Height = 11
+end
+
+
+-- Example saved variables with a single place to read Width/Height
+_G[AddOn .. "_SavedVariables"] = {
+    ["CastBar"] = {
+        ["Width"]  = 105,
+        ["Height"] = 11,   -- <--- Add a Height field here
+        ["PointX"] = 15,
+        ["PointY"] = -5,
+    },
+    ["Icon"] = {
+        ["PointX"] = -62,
+        ["PointY"] =  0,
+    },
+    ["Timer"] = {
+        ["Anchor"] = "RIGHT",
+        ["PointX"] =  52,
+        ["PointY"] =  0,
+        ["Format"] = "LEFT"
+    },
+    ["Spell"] = {
+        ["Anchor"] = "LEFT",
+        ["PointX"] =  -53,
+        ["PointY"] =  0,
+    },
+    ["Enable"] = {
+        ["Test"]       = false,
+        ["Player Pet"] = true,
+        ["Icon"]       = true,
+        ["Timer"]      = true,
+        ["Spell"]      = true,
+    },
+}
 
 -- This table will hold references to the castbar frames by unit
 local castbarsByUnit = {}
@@ -37,7 +84,7 @@ local height = 10
 -- 1) A helper function to update size & positions consistently
 ---------------------------------------------------------------------
 local function UpdateCastBarDimensions(CastBar)
-    
+    local sv = _G[AddOn .. "_SavedVariables"]
 	
 
     -- The castbar frame itself
@@ -70,11 +117,11 @@ local function UpdateCastBarDimensions(CastBar)
 
     -- Re-anchor SpellName and CastTime if you want them to shift
     -- with width/height changes, or they can remain absolute
-    
+    local SpellSV = sv.Spell
 	CastBar.SpellName:ClearAllPoints()
     CastBar.SpellName:SetPoint("LEFT", CastBar, "LEFT", 4, 0)
 
-   
+    local TimerSV = sv.Timer
     CastBar.CastTime:ClearAllPoints()
     CastBar.CastTime:SetPoint("RIGHT", CastBar, "RIGHT", -4, 0)
 end
@@ -83,7 +130,7 @@ end
 -- 2) Creating a single castbar for a given unit's nameplate
 ---------------------------------------------------------------------
 local function UnitCastBar_Create(unit, namePlate)
-    
+    local sv = _G[AddOn .. "_SavedVariables"]
     local frameName = AddOn .. "_Frame_" .. unit .. "CastBar"
     local CastBar = CreateFrame("Frame", frameName, namePlate)
 
@@ -132,7 +179,9 @@ local function UnitCastBar_Create(unit, namePlate)
     CastBar.unit       = unit
 
     -- Show/Hide sub-elements based on user "Enable"
-    
+    if not sv.Enable.Icon  then Icon:Hide() IconBorder:Hide() end
+    if not sv.Enable.Spell then SpellName:Hide() end
+    if not sv.Enable.Timer then CastTime:Hide() end
 
     -- Now call our dimension update
     UpdateCastBarDimensions(CastBar)
