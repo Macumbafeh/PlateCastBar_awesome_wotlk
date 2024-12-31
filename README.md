@@ -15,7 +15,7 @@ Now you can set width and height of everything at this line
 
 ![image](https://github.com/user-attachments/assets/397a7a28-6808-4b22-9485-f9293c82c90d)
 
-I added many textures file also from Sharedmedia addon, if you want to change the texture skin you can change the name here (same thing for the font)
+I added ~120 texture and font files also from Sharedmedia addon, if you want to change the texture skin you can change the name here (same thing for the font)
 
 ![image](https://github.com/user-attachments/assets/abe258a4-da5b-41b9-96e1-45cc0b93620d)
 
