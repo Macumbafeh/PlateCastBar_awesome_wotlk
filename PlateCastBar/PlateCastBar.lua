@@ -24,7 +24,7 @@ local Table = {
 
 local Textures = {
     Font   = "Interface\\AddOns\\".. AddOn .."\\Textures\\DorisPP.ttf",
-    CastBar= "Interface\\AddOns\\".. AddOn .."\\Textures\\media\\LiteStep.tga",
+    CastBar= "Interface\\AddOns\\".. AddOn .."\\Textures\\media\\Blinkii.tga",
 }
 
 if not _G[AddOn .. "_SavedVariables"] then
@@ -77,8 +77,8 @@ _G[AddOn .. "_SavedVariables"] = {
 
 -- This table will hold references to the castbar frames by unit
 local castbarsByUnit = {}
-local width  = 105
-local height = 10
+local width  = 95
+local height = 7
 
 ---------------------------------------------------------------------
 -- 1) A helper function to update size & positions consistently
@@ -103,8 +103,8 @@ local function UpdateCastBarDimensions(CastBar)
 
     -- The icon position is set by user offsets; size is your choice
     -- or you might scale it proportionally to castbar height:
-    -- e.g. Icon is 1.2 * castbar height
-    local iconSize = math.floor(height * 1.4)
+    -- e.g. Icon is 1.4 * castbar height (40%)
+    local iconSize = math.floor(height * 1.5)
     CastBar.Icon:SetWidth(iconSize)
     CastBar.Icon:SetHeight(iconSize)
     CastBar.Icon:ClearAllPoints()
@@ -112,18 +112,18 @@ local function UpdateCastBarDimensions(CastBar)
 	
 	CastBar.IconBorder:ClearAllPoints()
     CastBar.IconBorder:SetPoint("CENTER", CastBar.Icon, "CENTER", 0, 0)
-    CastBar.IconBorder:SetWidth(iconSize + 2)
-    CastBar.IconBorder:SetHeight(iconSize + 2)
+    CastBar.IconBorder:SetWidth(iconSize + 1)
+    CastBar.IconBorder:SetHeight(iconSize + 1)
 
     -- Re-anchor SpellName and CastTime if you want them to shift
     -- with width/height changes, or they can remain absolute
     local SpellSV = sv.Spell
 	CastBar.SpellName:ClearAllPoints()
-    CastBar.SpellName:SetPoint("LEFT", CastBar, "LEFT", 4, 0)
+    CastBar.SpellName:SetPoint("LEFT", CastBar, "LEFT", 0, 0)
 
     local TimerSV = sv.Timer
     CastBar.CastTime:ClearAllPoints()
-    CastBar.CastTime:SetPoint("RIGHT", CastBar, "RIGHT", -4, 0)
+    CastBar.CastTime:SetPoint("RIGHT", CastBar, "RIGHT", 0, 0)
 end
 
 ---------------------------------------------------------------------
@@ -154,11 +154,11 @@ local function UnitCastBar_Create(unit, namePlate)
 
     -- SpellName
     local SpellName = CastBar:CreateFontString(nil)
-    SpellName:SetFont(Textures.Font, 7, "OUTLINE")
+    SpellName:SetFont(Textures.Font, 6, "OUTLINE")
 
     -- CastTime
     local CastTime = CastBar:CreateFontString(nil)
-    CastTime:SetFont(Textures.Font, 9, "OUTLINE")
+    CastTime:SetFont(Textures.Font, 7, "OUTLINE")
 
     -- Border
     local Border = CastBar:CreateTexture(nil, "BACKGROUND")
@@ -206,8 +206,8 @@ local function UpdateCastBar(unit, isChannel)
     end
 
     if name then
-        if string.len(name) > 19 then
-            name = string.sub(name,1,19) .. ".. "
+        if string.len(name) > 17 then
+            name = string.sub(name,1,17) .. ".. "
         end
         CastBar.SpellName:SetText(name)
         CastBar.Icon:SetTexture(texture)
@@ -273,8 +273,15 @@ Frame:SetScript("OnEvent", function(self, event, unit, ...)
 
     elseif event == "NAME_PLATE_UNIT_ADDED" then
         local namePlate = C_NamePlate.GetNamePlateForUnit(unit)
-        if namePlate and not castbarsByUnit[unit] then
-            UnitCastBar_Create(unit, namePlate)
+        if namePlate then
+			local CastBar = castbarsByUnit[unit]
+			if not CastBar then
+				CastBar = UnitCastBar_Create(unit, namePlate)
+			end
+			 if UnitCastingInfo(unit) or UnitChannelInfo(unit) then
+                CastBar:Show()
+                UpdateCastBar(unit, UnitChannelInfo(unit) ~= nil)
+            end 
         end
 
     elseif event == "NAME_PLATE_UNIT_REMOVED" then
