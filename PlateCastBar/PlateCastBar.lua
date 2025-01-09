@@ -197,14 +197,18 @@ end
 local function UpdateCastBar(unit, isChannel)
     local CastBar = castbarsByUnit[unit]
     if not CastBar or not CastBar:IsShown() then return end
-
-    local name, _, text, texture, startTime, endTime
-    if isChannel then
-        name, _, text, texture, startTime, endTime = UnitChannelInfo(unit)
+	
+	local EXPANSION_LEVEL = GetAccountExpansionLevel()
+	
+	local name, _, text, texture, startTime, endTime, _, _, notInterruptible
+	if isChannel then
+        name, _, text, texture, startTime, endTime, _, notInterruptible = UnitChannelInfo(unit)
     else
-        name, _, text, texture, startTime, endTime = UnitCastingInfo(unit)
+        name, _, text, texture, startTime, endTime, _, _, notInterruptible = UnitCastingInfo(unit)
     end
-
+	
+	
+		
     if name then
         if string.len(name) > 17 then
             name = string.sub(name,1,17) .. ".. "
@@ -227,7 +231,13 @@ local function UpdateCastBar(unit, isChannel)
         CastBar.Texture:ClearAllPoints()
         CastBar.Texture:SetPoint("CENTER", CastBar, "CENTER",
             -barWidth/2 + barWidth*(castTime/maxCastTime)/2, 0)
-        CastBar.Texture:SetVertexColor(1, 0.5, 0)
+        
+		if EXPANSION_LEVEL == 2 and notInterruptible then
+			CastBar.Texture:SetVertexColor(0.5, 0.5, 0.5)
+		else
+			CastBar.Texture:SetVertexColor(1, 0.5, 0)
+		end
+		
 
         local total    = string.format("%.2f", maxCastTime)
         local leftTime = (isChannel)
